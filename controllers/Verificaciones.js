@@ -7,9 +7,6 @@ const jsonwebtoken = require('jsonwebtoken');
 //requerimiento de modelo de admin
 const adm = require('../models/admin')
 
-//requerimiento de modelo de usuario
-const user = require('../models/user')
-
 //requerimiento de secret config
 const config = require('./config');
 
@@ -61,3 +58,4 @@ ruta.get('/prueba', async(req,res) => {
             }
         })
 }) */
+module.exports = {VerifyTokenUser, VerifyTokenAdmin};

@@ -45,6 +45,7 @@ servidor.set("view engine", ".hbs");
 //Middlewares
 
 servidor.use(express.json());
+servidor.use(express.urlencoded({extended: false}));
 
 //Routes
 servidor.use(require('./routes/rutas'))

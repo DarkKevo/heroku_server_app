@@ -6,12 +6,10 @@ const rutas = express.Router()
 
 const user = require('../models/user')
 
-//llamado de funcion de creacion test
-const {
-	signup_user,
-	signin,
-	verifyToken
-} = require('../controllers/user_functions');
+//llamado de controladores
+const {Creacion_De_Admin, Creacion_De_Usuario} = require('../controllers/AllCreation');
+const {Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins}= require('../controllers/Inicio_Sesion');
+const {VerifyTokenUser, VerifyTokenAdmin}= require('../controllers/Verificaciones');
 
 //actually token
 let actually_token;
@@ -23,12 +21,15 @@ rutas.get('/',(req,res)=>{
 rutas.get('/1',(req,res)=>{
     res.render("inventario");
 })
-
-rutas.get('/2',(req,res)=>{
-    signup_user()
+rutas.post('/2',(req,res)=>{
+    Creacion_De_Usuario(req,res)
+	//.then(user=>)
 	res.render("tienda");
 })
-
+rutas.get('/2',(req,res)=>{
+    Inicio_de_Sesion_Usuarios(req,res);
+	res.render("tienda");
+})
 
 //importar model
 
