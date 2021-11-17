@@ -24,7 +24,8 @@ async function Creacion_De_Usuario(req, res) {
 	try {
 		await usuario_nuevo.save();
 	} catch (err) {
-		return alert('Datos no Validos');
+		alert('Datos no Validos');
+		return false
 	}
 	//generacion de token por registrarse exitosamente
 	//NOTA: Tiempo de vencimiento 15min
@@ -48,7 +49,8 @@ async function Creacion_De_Admin(req, res) {
 	try {
 		await admin_nuevo.save();
 	} catch (err) {
-		return alert('Datos no Validos');
+		alert('Datos no Validos');
+		return false
 	}
 	//generacion de token por registrarse exitosamente
 	//NOTA: Tiempo de vencimiento 15min
