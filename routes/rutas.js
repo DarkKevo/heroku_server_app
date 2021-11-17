@@ -30,6 +30,17 @@ rutas.get('/2',(req,res)=>{
     Inicio_de_Sesion_Usuarios(req,res);
 	res.render("tienda");
 })
+//Inventario
+rutas.post('/1',(req,res)=>{
+    //CREAR PRODUCTO
+	res.render("inventario");
+})
+rutas.post('/1',(req,res)=>{
+    console.log('bien compa')
+	//Buscar productos
+	//res.render("inventario");
+	res.end();
+})
 
 //importar model
 
