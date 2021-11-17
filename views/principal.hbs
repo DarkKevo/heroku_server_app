@@ -12,10 +12,12 @@
                     <h5 class="card-header text-center"><b><u>Administrador</u></b></h5>
                     <div class="card-body align-items-center">
                     <p class="card-text">
-                        <input type="text" name="usuario" id="usuarioAdmin" placeholder="Usuario" class="form-control my-3" required="required">
-                        <input type="password" name="clave" id="claveAdmin" placeholder="Clave" class="form-control my-3" required="required">
+                        <form action="/1" method="GET">
+                        <input type="text" name="email" placeholder="Correo" class="form-control my-3" required="required">
+                        <input type="password" name="password" placeholder="Clave" class="form-control my-3" required="required">
                     </p>
-                    <center> <a href="http://localhost:3000/1" class="btn btn-sm rounded-pill btn btn-outline-success  p-3 shadow-sm font-weight-bold">Iniciar</a> </center>
+                    <center> <button class="btn btn-sm rounded-pill btn btn-outline-success  p-3 shadow-sm font-weight-bold" >Iniciar</button> </center>
+                    </form>
                     </div>
                 </div>
             </div>

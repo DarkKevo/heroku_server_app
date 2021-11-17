@@ -19,11 +19,11 @@ rutas.get('/',(req,res)=>{
     res.render("principal");
 })
 rutas.get('/1',(req,res)=>{
-    res.render("inventario");
+    Inicio_de_Sesion_Admins(req,res);
+	res.render("inventario");
 })
 rutas.post('/2',(req,res)=>{
     Creacion_De_Usuario(req,res)
-	//.then(user=>)
 	res.render("tienda");
 })
 rutas.get('/2',(req,res)=>{
