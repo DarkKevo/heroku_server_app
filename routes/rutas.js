@@ -23,11 +23,11 @@ rutas.get('/',(req,res)=>{
 rutas.get('/1',(req,res)=>{
     res.render("inventario");
 })
-/*No funciona aun
+
 rutas.get('/2',(req,res)=>{
     signup_user()
 	res.render("tienda");
-})*/
+})
 
 
 //importar model
