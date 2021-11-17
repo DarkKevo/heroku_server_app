@@ -26,7 +26,7 @@ db.on('error', err => {
     console.log(err)
 })
 
-//Configuraciones de Express
+//Configuraciones
 
 servidor.set('port', 3000);
 

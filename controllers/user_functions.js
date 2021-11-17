@@ -8,12 +8,12 @@ const jsonwebtoken = require('jsonwebtoken');
 const config = require('./config');
 
 //creacion
-async function signup_user(username, email, password) {
+async function signup_user() {
 	//creacion de nuevo objeto
 	const new_user = new user({
-		username: username,
-		email: email,
-		password: password,
+		username: document.getElementById("usuarioCliente").value,
+		email: document.getElementById("email").value,
+		password: document.getElementById("claveCliente").value,
 	});
 
 	//encriptacion de la propiedad password con metodo de user

@@ -3,6 +3,19 @@ const express = require('express');
 
 //express router
 const rutas = express.Router()
+
+const user = require('../models/user')
+
+//llamado de funcion de creacion test
+const {
+	signup_user,
+	signin,
+	verifyToken
+} = require('../controllers/user_functions');
+
+//actually token
+let actually_token;
+
 //Rutas de la interfaz
 rutas.get('/',(req,res)=>{
     res.render("principal");
@@ -10,19 +23,14 @@ rutas.get('/',(req,res)=>{
 rutas.get('/1',(req,res)=>{
     res.render("inventario");
 })
+/*No funciona aun
+rutas.get('/2',(req,res)=>{
+    signup_user()
+	res.render("tienda");
+})*/
+
 
 //importar model
-let user = require('../models/user')
-
-//llamado de funcion de creacion test
-const {
-    signup_user,
-	signin,
-	verifyToken
-} = require('../controllers/user_functions');
-
-//actually token
-let actually_token;
 
 //Ruta de Prueba
 rutas.post('/test/creacion', async (req, res) => {
