@@ -5,25 +5,39 @@
         <h5>Registro de productos</h5>
       </a>
       <!--Primera fila-->
-      <div class="row  w-100">
-          <div class="col-sm-3"> 
-            <input type="text" name="usuario" id="usuarioAdmin" placeholder="Usuario" class="form-control my-3" required="required">
-          </div> 
-          <div class="col-sm-3"> 
-            <input type="text" name="usuario" id="usuarioAdmin" placeholder="Usuario" class="form-control my-3" required="required">
-          </div>
-          <div class="col-sm-3"> 
-            <input type="text" name="usuario" id="usuarioAdmin" placeholder="Usuario" class="form-control my-3" required="required">
-          </div>
-          <div class="col-sm-3"> 
-            <input type="text" name="usuario" id="usuarioAdmin" placeholder="Usuario" class="form-control my-3" required="required">
-          </div>
-      </div>
+      <form action="/1" method="POST">
+        <div class="row  w-100">
+            <div class="col-sm-3"> 
+              <label for='Nombre' style="color:white">Nombre: </label>
+              <input type="text" name="Nombre"  placeholder="Nombre" class="form-control my-2" required="required">
+            </div> 
+            <div class="col-sm-3"> 
+              <label for='Nombre' style="color:white">Marca: </label>
+              <input type="text" name="Marca"  placeholder="Marca" class="form-control my-2" required="required">
+            </div>
+            <div class="col-sm-3"> 
+              <label for='Nombre' style="color:white">Descripcion: </label>
+              <input type="text" name="Descripcion"  placeholder="Descripcion" class="form-control my-2" required="required">
+            </div>
+        </div>  
+        <!--Segunda Fila-->
+        <div class="row  w-100">
+            <div class="col-sm-4"> 
+              <label for='Nombre' style="color:white">Existencia: </label>
+              <input type="number" name="Existencia"  placeholder="Existencia" class="form-control my-2" required="required">
+            </div>
+            <div class="col-sm-4"> 
+              <label for='Nombre' style="color:white">Precio: </label>
+              <input type="number" name="Precio"  placeholder="Precio" class="form-control my-2" required="required">
+            </div>
+            <div class="col-sm-4"> 
+              <br>
+              <button class="btn btn-sm form-control my-2 p-2 btn btn-outline-success font-weight-bold"> Registrar</button>
+            </div>
+        </div>
+      </form>
       
       {{!-- <!--Segunda fila-->
-      <div class="row  w-100">
-          <h1>hola</h1>
-      </div>
       <!--Tercera fila-->
       <div class="row  w-100">
           <h1>hola</h1>
@@ -32,16 +46,22 @@
       <div class="row  w-100">
           <h1>hola</h1>  
       </div>  --}}
-      
-      
-      <center> <a href="" class="btn btn-sm mt-2 mx-5 btn btn-outline-success font-weight-bold">Registrar</a> </center>
-        
+         
     </nav>
 <hr>
 </div>
 <div class="container mt-3" >
-  <input type="text" name="usuario" id="usuarioAdmin" placeholder="Buscar" class="form-control mt-3 mx-auto " required="required">
-  <a href="" class="btn btn-sm mt-2 mx-5 btn btn-outline-Dark font-weight-bold">Buscar</a>  
+  <form action="/1.1" method="POST">
+    <div class="row  w-100">
+      <div class="col-sm-4">
+        <input type="text" name="Producto" placeholder="Buscar" class="form-control mt-2" required="required">    
+      </div>
+
+      <div class="col-sm-4">
+        <button class="btn btn-md mt-2 btn btn-outline-Dark font-weight-bold">Buscar</button>  
+      </div>
+    </div>
+  </form>
   <hr>
 </div>
   
