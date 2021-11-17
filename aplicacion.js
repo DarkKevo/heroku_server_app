@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const db = mongoose.connection
 const express = require('express');
 const servidor = express();
+const {engine} = require('express-handlebars');
+const path = require('path');
 
 //url de conexion
 
@@ -28,14 +30,26 @@ db.on('error', err => {
 
 servidor.set('port', 3000);
 
+servidor.set("views", path.join(__dirname, "views"));
+servidor.engine(
+  ".hbs",
+  engine({
+    defaultLayout: "main",
+    layoutsDir: path.join(servidor.get("views"), "layouts"),
+    partialsDir: path.join(servidor.get("views"), "partials"),
+    extname: ".hbs",
+  })
+); 
+servidor.set("view engine", ".hbs");
+
 //Middlewares
 
 servidor.use(express.json());
 
 //Routes
-
-let routes = require('./routes/rutas')
-servidor.use('/server', routes)
+servidor.use(require('./routes/rutas'))
+/*let routes = require('./routes/rutas')
+servidor.use('/server', routes)*/
 
 //Listen
 
