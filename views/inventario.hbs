@@ -1,5 +1,5 @@
 <div class="container mt-3">
-
+<!--Registro productos-->
   <nav class="navbar navbar-dark bg-dark px-3 py-3">
     <a class="navbar-brand">
       <h5>Registro de productos</h5>
@@ -83,26 +83,27 @@
   <hr />
 </div>
 <div class="container mt-3">
-  <form action="/1.1" method="POST">
+  <p><em>Para listar todos los productos, escribe all en ambas entradas: </em></p>
+</div>
+<!--Boton de busquedad-->
+<div class="container mt-3">
+  <form action="/Buscar" method="POST">
     <div class="row w-100">
       <div class="col-sm-4">
         <input
           type="text"
-          name="Producto"
+          name="atributo"
+          placeholder="Propiedad a buscar {nombre,tipo,marca...}"
+          class="form-control mt-2"
+          required="required"
+        />
+        <input
+          type="text"
+          name="dato"
           placeholder="Buscar"
           class="form-control mt-2"
           required="required"
         />
-        <select class="form-select mt-2" aria-label="Default select example">
-
-          <option name="atributo" selected>Producto</option>
-          <option name="atributo">Marca</option>
-          <option name="atributo">Descripcion</option>
-          <option name="atributo">Existencia</option>
-          <option name="atributo">Tipo</option>
-          <option name="atributo">Precio</option>
-
-        </select>
       </div>
 
       <div class="col-sm-4">
@@ -114,7 +115,7 @@
   </form>
   <hr />
 </div>
-
+<!--Tabla de productos-->
 <div class="container mt-3">
 
   <table class="table mt-3">
@@ -139,11 +140,12 @@
       <td>{{existencia}}</td>
       <td>{{tipo}}</td>
       <td>{{precio}}</td>      
-      <th scope="col"><a href="/Actualizar"
+      <th scope="col"><a href="/Actualizar/{{_id}}"
           class="btn btn-outline-warning"
         >
           Editar</a></th>
-      <th scope="col"><a href="/Inventario"
+
+      <th scope="col"><a href="/Eliminado/{{_id}}"
           class="btn btn-outline-danger"
         >
           Eliminar</a></th>

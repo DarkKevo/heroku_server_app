@@ -1,8 +1,8 @@
-const user = require('../models/user')
+const producto = require('../models/producto')
 
 async function eliminar(req,res) {
     try {
-        await user.findByIdAndDelete(req.body.Id)
+        await producto.findByIdAndDelete(req.params.id)
     } catch (error) {
         console.log(error)
         return false
