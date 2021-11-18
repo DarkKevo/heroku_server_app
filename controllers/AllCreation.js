@@ -42,7 +42,7 @@ async function Creacion_De_Usuario(req, res) {
 //creacion de admin
 async function Creacion_De_Admin(req, res) {
 	//objeto nuevo
-	if(req.body.Codigo=='159'){
+	if(req.body.Codigo=='5CHIBH-12OGH'){
 		const admin_nuevo = new adm({
 			username: req.body.username,
 			email: req.body.email,
