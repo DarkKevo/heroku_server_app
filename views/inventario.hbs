@@ -82,27 +82,25 @@
   </nav>
   <hr />
 </div>
+
 <div class="container mt-3">
-  <form action="/1.1" method="POST">
+  <form action="/Buscar" method="POST">
     <div class="row w-100">
       <div class="col-sm-4">
         <input
           type="text"
-          name="Producto"
+          name="atributo"
+          placeholder="Propiedad a buscar {nombre,tipo,marca...}"
+          class="form-control mt-2"
+          required="required"
+        />
+        <input
+          type="text"
+          name="dato"
           placeholder="Buscar"
           class="form-control mt-2"
           required="required"
         />
-        <select class="form-select mt-2" aria-label="Default select example">
-
-          <option name="atributo" selected>Producto</option>
-          <option name="atributo">Marca</option>
-          <option name="atributo">Descripcion</option>
-          <option name="atributo">Existencia</option>
-          <option name="atributo">Tipo</option>
-          <option name="atributo">Precio</option>
-
-        </select>
       </div>
 
       <div class="col-sm-4">

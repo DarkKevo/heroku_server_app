@@ -5,42 +5,42 @@ async function Busqueda(req, res) {
 	let producto;
 	switch (req.body.atributo) {
 		case 'nombre':
-			producto = await Producto.find({ nombre: req.body.dato })
+			producto = await Producto.find({ nombre: req.body.dato }).lean()
 				.then((producto) => {
 					console.log(producto);
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'tipo':
-			producto = await Producto.find({ tipo: req.body.dato })
+			producto = await Producto.find({ tipo: req.body.dato }).lean()
 				.then((producto) => {
 					console.log(producto);
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'marca':
-			producto = await Producto.find({ marca: req.body.dato })
+			producto = await Producto.find({ marca: req.body.dato }).lean()
 				.then((producto) => {
 					console.log(producto);
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'descripcion':
-			producto = await Producto.find({ descripcion: req.body.dato })
+			producto = await Producto.find({ descripcion: req.body.dato }).lean()
 				.then((producto) => {
 					console.log(producto);
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'existencia':
-			producto = await Producto.find({ existencia: req.body.dato })
+			producto = await Producto.find({ existencia: req.body.dato }).lean()
 				.then((producto) => {
 					console.log(producto);
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'precio':
-			producto = await Producto.find({ precio: req.body.dato })
+			producto = await Producto.find({ precio: req.body.dato }).lean()
 				.then((producto) => {
 					console.log(producto);
 				})
@@ -54,4 +54,4 @@ async function Busqueda(req, res) {
 	return producto;
 }
 
-module.exports = { Busqueda }
+module.exports = {Busqueda}
