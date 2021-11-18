@@ -28,13 +28,15 @@ async function VerifyTokenUser (TokenActual) {
 }
 
 //verificacion de token de admin
-async function VerifyTokenAdmin (TokenActual) {
+function VerifyTokenAdmin (TokenActual) {
     const token = TokenActual
     //decodificacion
     const decoded = jsonwebtoken.verify(token, config.secret)
     const id = decoded.id
-    //busqueda
-    const busqueda = await adm.findById(id, {password: 0})
+    return id
+}
+
+/*const busqueda = await adm.findById(id, {password: 0})
     if (!busqueda) {
         console.log('No token Provided')
         return false
@@ -42,8 +44,7 @@ async function VerifyTokenAdmin (TokenActual) {
         console.log('Valid Token')
         console.log(busqueda)
         return true
-    }
-}
+    } */
 
 //La continuacion de esta funcion dede estar presente en la ruta del siguiente modo
 

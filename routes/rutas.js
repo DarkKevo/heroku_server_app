@@ -7,7 +7,7 @@ const producto = require('../models/producto');
 //Controladores
 const {Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto} = require('../controllers/AllCreation');
 const { Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins } = require('../controllers/Inicio_Sesion');
-const { VerifyTokenUser } = require('../controllers/Verificaciones');
+const { VerifyTokenUser, VerifyTokenAdmin } = require('../controllers/Verificaciones');
 const {Busqueda} = require('../controllers/busquedas');
 const {editar_datos} = require('../controllers/edicion'); 
 const {eliminar} = require('../controllers/eliminar')
@@ -20,6 +20,10 @@ let token_actuall;
 //Inventario
 //Crear Producto
 rutas.post('/CrearProducto',async (req,res)=>{
+let valor
+valor = VerifyTokenAdmin(token_actuall)
+console.log(valor)
+
 	await Nuevo_Producto(req,res)
 	.then(async (resp) => {
 		if(resp == false) {
@@ -29,7 +33,7 @@ rutas.post('/CrearProducto',async (req,res)=>{
 			res.render("inventario",{Producto:Producto});
 		}
 	})	
-})
+}) 	
 //Actualizar Producto
 rutas.get('/Actualizar/:id', async (req,res) => {
 	const Producto = await producto.findById(req.params.id).lean();	
