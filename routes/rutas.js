@@ -60,13 +60,12 @@ rutas.get('/Eliminado/:id', async(req,res) => {
 })
 //Buscar
 rutas.post('/Buscar', async(req,res)=>{
-	await Busqueda(req,res)
-	.then(async (producto)=> {
-		const Producto = producto;
-		console.log(producto)
-		res.render("inventario",{Producto});
-	})
-	.catch(err=> res.render('Err'))
+	 await Busqueda(req,res)
+	 	.then(producto=>console.log(producto) 
+		)
+		.catch(err =>{
+			console.log(err);
+			res.render('Err')}) 
 })
 
 //Rutas Finales

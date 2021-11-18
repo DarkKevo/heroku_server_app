@@ -1,48 +1,62 @@
 //requerimiento de modelo de productos
-const Producto = require('../models/producto');
+const producto = require('../models/producto');
 
 async function Busqueda(req, res) {
-	let producto;
+	let Producto;
 	switch (req.body.atributo) {
+		case 'all':
+			Producto = await producto.find().lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
+				})
+				.catch((err) => console.log(err));
+			break;
 		case 'nombre':
-			producto = await Producto.find({ nombre: req.body.dato }).lean()
-				.then((producto) => {
-					console.log(producto);
+			Producto = await producto.find({ nombre: req.body.dato }).lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'tipo':
-			producto = await Producto.find({ tipo: req.body.dato }).lean()
-				.then((producto) => {
-					console.log(producto);
+			Producto = await producto.find({ tipo: req.body.dato }).lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'marca':
-			producto = await Producto.find({ marca: req.body.dato }).lean()
-				.then((producto) => {
-					console.log(producto);
+			Producto = await producto.find({ marca: req.body.dato }).lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'descripcion':
-			producto = await Producto.find({ descripcion: req.body.dato }).lean()
-				.then((producto) => {
-					console.log(producto);
+			Producto = await producto.find({ descripcion: req.body.dato }).lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'existencia':
-			producto = await Producto.find({ existencia: req.body.dato }).lean()
-				.then((producto) => {
-					console.log(producto);
+			Producto = await producto.find({ existencia: req.body.dato }).lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
 				})
 				.catch((err) => console.log(err));
 			break;
 		case 'precio':
-			producto = await Producto.find({ precio: req.body.dato }).lean()
-				.then((producto) => {
-					console.log(producto);
+			Producto = await producto.find({ precio: req.body.dato }).lean()
+				.then((Producto) => {
+					console.log(Producto);
+					res.render("inventario",{Producto});
 				})
 				.catch((err) => console.log(err));
 			break;
@@ -50,8 +64,7 @@ async function Busqueda(req, res) {
 			res.send(
 				'La categoria selecionada, no se encuentra en el sistema, por favor intente con alguna de estas [tipo,marca,modelo,descripcion,precio,id]'
 			);
-	}
-	return producto;
+	} 
 }
 
 module.exports = {Busqueda}
