@@ -13,7 +13,6 @@ const producto_object = new Schema ({
     },
     marca: {
         type: String,
-        unique: true,
         required: true
     },
     descripcion: {

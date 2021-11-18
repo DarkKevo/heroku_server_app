@@ -4,7 +4,7 @@
       <h5>Edicion de productos</h5>
     </a>
     <!--Primera fila-->
-    <form action="/Actualizar/{{task._id}}" method="POST">
+    <form action="/Actualizar/{{Producto._id}}" method="POST">
       <div class="row w-100">
         <div class="col-sm-3">
           <label for="Nombre" style="color:white">Nombre: </label>
@@ -14,7 +14,7 @@
             placeholder="Nombre"
             class="form-control my-2"
             required="required" 
-            value="{{nombre}}"
+            value="{{Producto.nombre}}"
           />
         </div>
         <div class="col-sm-3">
@@ -25,7 +25,7 @@
             placeholder="Marca"
             class="form-control my-2"
             required="required"
-            value='{{marca}}'
+            value='{{Producto.marca}}'
           />
         </div>
         <div class="col-sm-3">
@@ -36,7 +36,7 @@
             placeholder="Descripcion"
             class="form-control my-2"
             required="required"
-            value="{{descripcion}}"
+            value="{{Producto.descripcion}}"
           />
         </div>
       </div>
@@ -50,7 +50,7 @@
             placeholder="Existencia"
             class="form-control my-2"
             required="required"
-            value="{{existencia}}"
+            value="{{Producto.existencia}}"
           />
         </div>
         <div class="col-sm-3">
@@ -61,7 +61,7 @@
             placeholder="Precio"
             class="form-control my-2"
             required="required"
-            value="{{precio}}"
+            value="{{Producto.precio}}"
           />
         </div>
         <div class="col-sm-3">
@@ -72,7 +72,7 @@
             placeholder="Tipo"
             class="form-control my-2"
             required="required"
-            value="{{tipo}}"
+            value="{{Producto.tipo}}"
           />
         </div>
         <div class="col-sm-3">
