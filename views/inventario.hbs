@@ -5,7 +5,7 @@
         <h5>Registro de productos</h5>
       </a>
       <!--Primera fila-->
-      <form action="/1" method="POST">
+      <form action="/CrearProducto" method="POST">
         <div class="row  w-100">
             <div class="col-sm-3"> 
               <label for='Nombre' style="color:white">Nombre: </label>
@@ -22,15 +22,19 @@
         </div>  
         <!--Segunda Fila-->
         <div class="row  w-100">
-            <div class="col-sm-4"> 
+            <div class="col-sm-3"> 
               <label for='Nombre' style="color:white">Existencia: </label>
               <input type="number" name="Existencia"  placeholder="Existencia" class="form-control my-2" required="required">
             </div>
-            <div class="col-sm-4"> 
+            <div class="col-sm-3"> 
               <label for='Nombre' style="color:white">Precio: </label>
               <input type="number" name="Precio"  placeholder="Precio" class="form-control my-2" required="required">
             </div>
-            <div class="col-sm-4"> 
+            <div class="col-sm-3"> 
+              <label for='Nombre' style="color:white">Tipo: </label>
+              <input type="text" name="Tipo"  placeholder="Tipo" class="form-control my-2" required="required">
+            </div>
+            <div class="col-sm-3"> 
               <br>
               <button class="btn btn-sm form-control my-2 p-2 btn btn-outline-success font-weight-bold"> Registrar</button>
             </div>
