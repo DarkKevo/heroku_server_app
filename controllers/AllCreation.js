@@ -42,27 +42,31 @@ async function Creacion_De_Usuario(req, res) {
 //creacion de admin
 async function Creacion_De_Admin(req, res) {
 	//objeto nuevo
-	const admin_nuevo = new adm({
-		username: req.body.username,
-		email: req.body.email,
-		password: req.body.password,
-	});
-	//encriptacion de password
-	admin_nuevo.password = await admin_nuevo.encriptar(admin_nuevo.password);
-	//guardado
-	try {
-		await admin_nuevo.save();
-	} catch (err) {
-		console.log(err)
-		return false
+	if(req.body.Codigo=='159'){
+		const admin_nuevo = new adm({
+			username: req.body.username,
+			email: req.body.email,
+			password: req.body.password,
+		});
+		//encriptacion de password
+		admin_nuevo.password = await admin_nuevo.encriptar(admin_nuevo.password);
+		//guardado
+		try {
+			await admin_nuevo.save();
+		} catch (err) {
+			console.log(err)
+			return false
+		}
+		//generacion de token por registrarse exitosamente
+		//NOTA: Tiempo de vencimiento 15min
+		const token = jsonwebtoken.sign({ id: admin_nuevo._id }, config.secret, {
+			expiresIn: 60 * 15,
+		});
+		console.log(token)
+		return token;
+	}else{
+		res.end()
 	}
-	//generacion de token por registrarse exitosamente
-	//NOTA: Tiempo de vencimiento 15min
-	const token = jsonwebtoken.sign({ id: admin_nuevo._id }, config.secret, {
-		expiresIn: 60 * 15,
-	});
-	console.log(token)
-	return token;
 }
 
 //Creacion de Producto
