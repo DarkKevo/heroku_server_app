@@ -16,14 +16,14 @@ async function Inicio_de_Sesion_Usuarios(req, res) {
 	const userfind = await user.findOne({ email: req.body.email });
 	//verificacion de existencia
 	if (!userfind) {
-		alert('Email no existente');
+		console.log('Email no existente')
 		return false;
 	}
 	//verificacion de password
 	const verify_password = await userfind.verificar(req.body.password);
 	//verificacion para token
 	if (!verify_password) {
-		alert('Password Incorrecto');
+		console.log('Password Incorrecto');
 		return false;
 	}
 	//generacion de token
@@ -31,6 +31,7 @@ async function Inicio_de_Sesion_Usuarios(req, res) {
 	const token = jsonwebtoken.sign({ id: userfind._id }, config.secret, {
 		expiresIn: 60 * 15,
 	});
+	console.log(token)
 	return token;
 }
 
@@ -40,14 +41,14 @@ async function Inicio_de_Sesion_Admins(req, res) {
 	const adminfind = await adm.findOne({ email: req.body.email });
 	//verificacion de existencia
 	if (!adminfind) {
-		alert('Email no existente');
+		console.log('Email no existente');
 		return false;
 	}
 	//verificacion de password
 	const verify_password = await adminfind.verificar(req.body.password);
 	//verificacion para token
 	if (!verify_password) {
-		alert('Password Incorrecto');
+		console.log('Password Incorrecto');
 		return false;
 	}
 	//generacion de token
@@ -55,6 +56,7 @@ async function Inicio_de_Sesion_Admins(req, res) {
 	const token = jsonwebtoken.sign({ id: adminfind._id }, config.secret, {
 		expiresIn: 60 * 15,
 	});
+	console.log(token)
 	return token;
 }
 

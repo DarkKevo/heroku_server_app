@@ -7,9 +7,9 @@ const rutas = express.Router()
 const user = require('../models/user')
 
 //llamado de controladores
-const {Creacion_De_Admin, Creacion_De_Usuario} = require('../controllers/AllCreation');
+/* const {Creacion_De_Admin, Creacion_De_Usuario} = require('../controllers/AllCreation');
 const {Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins}= require('../controllers/Inicio_Sesion');
-const {VerifyTokenUser, VerifyTokenAdmin}= require('../controllers/Verificaciones');
+const {VerifyTokenUser, VerifyTokenAdmin}= require('../controllers/Verificaciones'); */
 
 //actually token
 let actually_token;
@@ -42,41 +42,48 @@ rutas.post('/1',(req,res)=>{
 	res.end();
 })
 
-//importar model
+//requerimientos pa probar
+const { Creacion_De_Usuario } = require('../controllers/AllCreation')
+const { Inicio_de_Sesion_Usuarios } = require('../controllers/Inicio_Sesion')
+const { VerifyTokenUser } = require('../controllers/Verificaciones')
 
-//Ruta de Prueba
-rutas.post('/test/creacion', async (req, res) => {
-	const { username, email, password } = req.body;
-	await signup_user(username, email, password).then((res) => {
-		actually_token = res;
-	});
-	console.log(`El token es ${actually_token}`);
-	res.json({ status: 'ok', message: 'Good Server' });
-});
+//Rutas de Prueba de Funciones Finales
+let token_actuall
 
-rutas.post('/test/signin', async (req, res) => {
-	const { email, password } = req.body;
-	await signin(email, password).then((res) => {
-		actually_token = res;
-	});
-	res.json({ status: 'ok', message: 'Good Server' });
-});
+rutas.post('/pruebadecreaciondeusuario', async(req,res) => {
+	await Creacion_De_Usuario(req,res)
+		.then((resp) => {
+			if(resp == false) {
+				console.log('Error en creacion')
+			} else {
+				token_actuall = resp
+			}
+		})
+	console.log(`Token actual es ${token_actuall}`)
+})
 
-rutas.post('/test/verify', async (req, res) => {
-    let Id
-	await verifyToken(actually_token)
-        .then((res) => {
-            Id = res
-        })
-    console.log(Id)
-	//continuacion de verify token debe ir en la rutas
-	const busqueda = await user.findById(Id, { password: 0 });
-	if (!busqueda) {
-		return res.status(404).send('not found user xd');
-	} else {
-		console.log(busqueda);
-	}
-});
+rutas.post('/pruebadeiniciarsesion', async(req,res) => {
+	await Inicio_de_Sesion_Usuarios(req,res)
+		.then((resp) => {
+			if (resp == false) {
+				console.log('No iniciaste sesion')
+			} else {
+				token_actuall = resp
+			}
+		})
+	console.log(`El token de inicio de sesion es ${token_actuall}`)
+})
+
+rutas.get('/pruebadeverificacion', async(req,res) => {
+	await VerifyTokenUser(token_actuall)
+		.then((resp) => {
+			if (resp == false) {
+				console.log('token expired or invalid')
+			} else {
+				console.log('Valid Token Nice')
+			}
+		})
+})
 
 //exportacion
 module.exports = rutas;

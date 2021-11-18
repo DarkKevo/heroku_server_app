@@ -19,7 +19,7 @@ async function VerifyTokenUser (TokenActual) {
     //busqueda
     const busqueda = await user.findById(id, {password: 0})
     if (!busqueda) {
-        alert('No token Provided')
+        console.log('No token Provided')
         return false
     } else {
         console.log('Valid Token')
@@ -36,10 +36,11 @@ async function VerifyTokenAdmin (TokenActual) {
     //busqueda
     const busqueda = await adm.findById(id, {password: 0})
     if (!busqueda) {
-        alert('No token Provided')
+        console.log('No token Provided')
         return false
     } else {
         console.log('Valid Token')
+        console.log(busqueda)
         return true
     }
 }
@@ -58,4 +59,5 @@ ruta.get('/prueba', async(req,res) => {
             }
         })
 }) */
-module.exports = {VerifyTokenUser, VerifyTokenAdmin};
+
+module.exports = { VerifyTokenUser, VerifyTokenAdmin }

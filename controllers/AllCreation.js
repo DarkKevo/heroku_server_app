@@ -4,6 +4,9 @@ const user = require('../models/user');
 //requerimiento de modelo de admins
 const adm = require('../models/admin');
 
+//requerimiento de modelo de productos
+const producto = require('../models/producto')
+
 //requerimiento de json web token
 const jsonwebtoken = require('jsonwebtoken');
 
@@ -24,7 +27,7 @@ async function Creacion_De_Usuario(req, res) {
 	try {
 		await usuario_nuevo.save();
 	} catch (err) {
-		alert('Datos no Validos');
+		console.log(err)
 		return false
 	}
 	//generacion de token por registrarse exitosamente
@@ -32,6 +35,7 @@ async function Creacion_De_Usuario(req, res) {
 	const token = jsonwebtoken.sign({ id: usuario_nuevo._id }, config.secret, {
 		expiresIn: 60 * 15,
 	});
+	console.log(token)
 	return token;
 }
 
@@ -49,7 +53,7 @@ async function Creacion_De_Admin(req, res) {
 	try {
 		await admin_nuevo.save();
 	} catch (err) {
-		alert('Datos no Validos');
+		console.log(err)
 		return false
 	}
 	//generacion de token por registrarse exitosamente
@@ -57,8 +61,28 @@ async function Creacion_De_Admin(req, res) {
 	const token = jsonwebtoken.sign({ id: admin_nuevo._id }, config.secret, {
 		expiresIn: 60 * 15,
 	});
+	console.log(token)
 	return token;
 }
 
+//Creacion de Producto
+async function Nuevo_Producto (req,res) {
+	const nuevo_producto = new producto({
+		nombre: req.body.Nombre,
+		tipo: req.body.Tipo,
+		marca: req.body.Marca,
+		descripcion: req.body.Descripcion,
+		existencia: req.body.Existencia,
+		precio: req.body.Precio
+	})
+	try {
+		nuevo_producto.save()
+	} catch (error) {
+		console.log(error)
+		return false
+	}
+	return true
+}
+
 //Exportacion de modulos
-module.exports = { Creacion_De_Admin, Creacion_De_Usuario };
+module.exports = { Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto };

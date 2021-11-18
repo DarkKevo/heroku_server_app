@@ -7,6 +7,10 @@ const producto_object = new Schema ({
         type: String,
         required: true
     },
+    tipo: {
+        type: String,
+        required: true
+    },
     marca: {
         type: String,
         unique: true,
