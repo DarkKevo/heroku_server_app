@@ -5,29 +5,30 @@ const user = require('../models/user');
 const jsonwebtoken = require('jsonwebtoken');
 
 //requerimiento de modelo de admin
-const adm = require('../models/admin')
+const adm = require('../models/admin');
 
 //requerimiento de secret config
 const config = require('./config');
 
 //verificacion de token de user
-async function VerifyTokenUser (TokenActual) {
-    const token = TokenActual
-    //decodificacion
-    const decoded = jsonwebtoken.verify(token, config.secret)
-    const id = decoded.id
-    //busqueda
-    const busqueda = await user.findById(id, {password: 0})
-    if (!busqueda) {
-        console.log('No token Provided')
-        return false
-    } else {
-        console.log('Valid Token')
-        return true
-    }
+async function VerifyTokenUser(TokenActual) {
+	const token = TokenActual;
+	//decodificacion
+	const decoded = jsonwebtoken.verify(token, config.secret);
+	const id = decoded.id;
+	//busqueda
+	const busqueda = await user.findById(id, { password: 0 });
+	if (!busqueda) {
+		console.log('No token Provided');
+		return false;
+	} else {
+		console.log('Valid Token');
+		return true;
+	}
 }
 
 //verificacion de token de admin
+
 function VerifyTokenAdmin (TokenActual) {
     const token = TokenActual
     //decodificacion
@@ -46,6 +47,7 @@ function VerifyTokenAdmin (TokenActual) {
         return true
     } */
 
+
 //La continuacion de esta funcion dede estar presente en la ruta del siguiente modo
 
 /* let tokenActual = fhwofhewofewofewoifhewo
@@ -61,4 +63,4 @@ ruta.get('/prueba', async(req,res) => {
         })
 }) */
 
-module.exports = { VerifyTokenUser, VerifyTokenAdmin }
+module.exports = { VerifyTokenUser, VerifyTokenAdmin };
