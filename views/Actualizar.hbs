@@ -1,11 +1,10 @@
 <div class="container mt-3">
-
-  <nav class="navbar navbar-dark bg-dark px-3 py-3">
+<nav class="navbar navbar-dark bg-dark px-3 py-3">
     <a class="navbar-brand">
-      <h5>Registro de productos</h5>
+      <h5>Edicion de productos</h5>
     </a>
     <!--Primera fila-->
-    <form action="/CrearProducto" method="POST">
+    <form action="/Actualizar/{{task._id}}" method="POST">
       <div class="row w-100">
         <div class="col-sm-3">
           <label for="Nombre" style="color:white">Nombre: </label>
@@ -14,7 +13,8 @@
             name="Nombre"
             placeholder="Nombre"
             class="form-control my-2"
-            required="required"
+            required="required" 
+            value="{{nombre}}"
           />
         </div>
         <div class="col-sm-3">
@@ -25,6 +25,7 @@
             placeholder="Marca"
             class="form-control my-2"
             required="required"
+            value='{{marca}}'
           />
         </div>
         <div class="col-sm-3">
@@ -35,6 +36,7 @@
             placeholder="Descripcion"
             class="form-control my-2"
             required="required"
+            value="{{descripcion}}"
           />
         </div>
       </div>
@@ -48,6 +50,7 @@
             placeholder="Existencia"
             class="form-control my-2"
             required="required"
+            value="{{existencia}}"
           />
         </div>
         <div class="col-sm-3">
@@ -58,6 +61,7 @@
             placeholder="Precio"
             class="form-control my-2"
             required="required"
+            value="{{precio}}"
           />
         </div>
         <div class="col-sm-3">
@@ -68,89 +72,17 @@
             placeholder="Tipo"
             class="form-control my-2"
             required="required"
+            value="{{tipo}}"
           />
         </div>
         <div class="col-sm-3">
           <br />
           <button
             class="btn btn-sm form-control my-2 p-2 btn btn-outline-success font-weight-bold"
-          > Registrar</button>
+          > Editar</button>
         </div>
       </div>
     </form>
 
   </nav>
-  <hr />
-</div>
-<div class="container mt-3">
-  <form action="/1.1" method="POST">
-    <div class="row w-100">
-      <div class="col-sm-4">
-        <input
-          type="text"
-          name="Producto"
-          placeholder="Buscar"
-          class="form-control mt-2"
-          required="required"
-        />
-        <select class="form-select mt-2" aria-label="Default select example">
-
-          <option name="atributo" selected>Producto</option>
-          <option name="atributo">Marca</option>
-          <option name="atributo">Descripcion</option>
-          <option name="atributo">Existencia</option>
-          <option name="atributo">Tipo</option>
-          <option name="atributo">Precio</option>
-
-        </select>
-      </div>
-
-      <div class="col-sm-4">
-        <button
-          class="btn btn-md mt-2 btn btn-outline-Dark font-weight-bold"
-        >Buscar</button>
-      </div>
-    </div>
-  </form>
-  <hr />
-</div>
-
-<div class="container mt-3">
-
-  <table class="table mt-3">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Producto</th>
-        <th scope="col">Marca</th>
-        <th scope="col">Descripcion</th>
-        <th scope="col">Existencia</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Editar</th>
-        <th scope="col">Eliminar</th>
-      </tr>
-    </thead>
-    <tbody>
-  {{#each Producto}}
-    <tr>
-      <td>{{nombre}}</td>
-      <td>{{marca}}</td>
-      <td>{{descripcion}}</td>
-      <td>{{existencia}}</td>
-      <td>{{tipo}}</td>
-      <td>{{precio}}</td>      
-      <th scope="col"><a href="/Actualizar"
-          class="btn btn-outline-warning"
-        >
-          Editar</a></th>
-      <th scope="col"><a href="/Inventario"
-          class="btn btn-outline-danger"
-        >
-          Eliminar</a></th>
-    </tr>
-  {{/each}}
-
-    </tbody>
-  </table>
-</div>
-
+  </div>

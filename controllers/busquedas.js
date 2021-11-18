@@ -5,7 +5,7 @@ async function Busqueda(req, res) {
 	let producto;
 	switch (req.body.atributo) {
 		case 'nombre':
-			producto = await Producto.find({ nombre: req.body.Dato })
+			producto = await Producto.find({ nombre: req.body.dato })
 				.then((producto) => {
 					console.log(producto);
 				})

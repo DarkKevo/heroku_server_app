@@ -45,7 +45,18 @@
   <form action="/1.1" method="POST">
     <div class="row  w-100">
       <div class="col-sm-4">
-        <input type="text" name="Producto" placeholder="Buscar" class="form-control mt-2" required="required">    
+         <input type="text" name="dato" placeholder="Buscar" class="form-control mt-2" required="required">
+         <!--<input type="text" name="Producto" placeholder="Buscar" class="form-control mt-2" required="required">    -->
+        <select class="form-select mt-2" aria-label="Default select example">
+        
+        <option name="atributo" selected>Producto</option>
+        <option name="atributo">Marca</option>
+        <option name="atributo">Descripcion</option>
+        <option name="atributo">Existencia</option>
+        <option name="atributo">Tipo</option>
+        <option name="atributo">Precio</option>
+      
+        </select>
       </div>
 
       <div class="col-sm-4">
@@ -61,10 +72,11 @@
 <table class="table mt-3">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Producto</th>
+            <th scope="col">Nombre</th>
             <th scope="col">Marca</th>
             <th scope="col">Descripcion</th>
             <th scope="col">Existencia</th>
+            <th scope="col">Tipo</th>
             <th scope="col">Precio</th>
             <th scope="col">Agregar al carrito</th>
           </tr>
