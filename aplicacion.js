@@ -1,54 +1,55 @@
 //Requerimientos con Express y mongoose
 
-const mongoose = require('mongoose')
-const db = mongoose.connection
+const mongoose = require('mongoose');
+const db = mongoose.connection;
 const express = require('express');
 const servidor = express();
-const {engine} = require('express-handlebars');
+const { engine } = require('express-handlebars');
 const path = require('path');
 
 //url de conexion
 
-let url = 'mongodb://127.0.0.1:27017/Proyecto'
+let url = 'mongodb://127.0.0.1:27017/Proyecto';
 
 //conexion de mongoose
-mongoose.connect(url)
-    //promesa catch para captar errores
-    .catch(err => console.log(err))
+mongoose
+	.connect(url)
+	//promesa catch para captar errores
+	.catch((err) => console.log(err));
 
 //mensaje de conexion exitosa
-db.on('open', _ => {
-    console.log(`Database connected url: ${url}`)
-})
+db.on('open', (_) => {
+	console.log(`Database connected url: ${url}`);
+});
 
 //errores
-db.on('error', err => {
-    console.log(err)
-})
+db.on('error', (err) => {
+	console.log(err);
+});
 
 //Configuraciones
 
 servidor.set('port', 3000);
 
-servidor.set("views", path.join(__dirname, "views"));
+servidor.set('views', path.join(__dirname, 'views'));
 servidor.engine(
-  ".hbs",
-  engine({
-    defaultLayout: "main",
-    layoutsDir: path.join(servidor.get("views"), "layouts"),
-    partialsDir: path.join(servidor.get("views"), "partials"),
-    extname: ".hbs",
-  })
-); 
-servidor.set("view engine", ".hbs");
+	'.hbs',
+	engine({
+		defaultLayout: 'main',
+		layoutsDir: path.join(servidor.get('views'), 'layouts'),
+		partialsDir: path.join(servidor.get('views'), 'partials'),
+		extname: '.hbs',
+	})
+);
+servidor.set('view engine', '.hbs');
 
 //Middlewares
 
 servidor.use(express.json());
-servidor.use(express.urlencoded({extended: false}));
+servidor.use(express.urlencoded({ extended: false }));
 
 //Routes
-servidor.use(require('./routes/rutas'))
+servidor.use(require('./routes/rutas'));
 /*let routes = require('./routes/rutas')
 servidor.use('/server', routes)*/
 
