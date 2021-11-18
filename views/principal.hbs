@@ -27,16 +27,18 @@
                     <h5 class="card-header text-center"><b><u>Cliente</u></b></h5>
                     <div class="card-body align-items-center">
                         <p class="card-text">
-                            <form action="/2" method="GET">
+                            <form action="/Tiendas" method="POST">
                             <input type="text" name="email" placeholder="Correo" class="form-control my-3" required="required">
                             <input type="password" name="password" placeholder="Clave" class="form-control my-3" required="required">
                             <center> 
                             <button class="btn btn-sm rounded-pill btn btn-outline-success  p-3 shadow-sm font-weight-bold" >Iniciar</button>
                             </form>
                         <!-- Button trigger modal -->
+                        
                         <button type="button" class="btn btn-sm rounded-pill btn btn-outline-Danger  p-3 shadow-sm font-weight-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             Registrar
                         </button> </center>
+                        
                         <!-- Modal -->
                         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -48,7 +50,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="/2" method="POST">
+                                        <form action="/Tienda" method="POST">
                                             <input type="text" name="username" placeholder="Usuario" class="form-control my-3" required="required">
                                             <input type="text" name="email" placeholder="Email" class="form-control my-3" required="required">
                                             <input type="password" name="password" placeholder="Clave" class="form-control my-3" required="required">
