@@ -8,14 +8,12 @@ const producto = require('../models/producto');
 const {Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto} = require('../controllers/AllCreation');
 const { Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins } = require('../controllers/Inicio_Sesion');
 const { VerifyTokenUser } = require('../controllers/Verificaciones');
-const {Busqueda} = require('../controllers/busquedas');
+const {Busqueda, BusquedaTienda} = require('../controllers/busquedas');
 const {editar_datos} = require('../controllers/edicion'); 
 const {eliminar} = require('../controllers/eliminar')
 //JSONtoken
 let token_actuall;
-
-//qlq
-
+let Producto_carrito=[];
 
 //Inventario
 //Crear Producto
@@ -68,6 +66,38 @@ rutas.post('/Buscar', async(req,res)=>{
 			res.render('Err')}) 
 })
 
+//Tienda
+//Buscar
+rutas.post('/BuscarT', async(req,res)=>{
+	await BusquedaTienda(req,res)
+		.then(producto=>console.log(producto) 
+	   )
+	   .catch(err =>{
+		   console.log(err);
+		   res.render('Err')}) 
+})
+//Agregar al carrito
+rutas.get('/Agregado/:id', async(req,res) => {
+	const add = await producto.findById(req.params.id).lean()
+	.then(async(add) => {Producto_carrito.push(add)
+		const Producto = await producto.find().lean();
+		console.log(Producto_carrito);
+		res.render("tienda",{Producto_carrito, Producto})
+	})
+	.cath(err => {console.log(err)
+	res.render('Err')}
+)})
+rutas.get('/Quitado/:pos',(req,res)=>{
+	let i= pos-1;
+	Producto_carrito.splice(i,1)
+	.then(async()=>{
+		const Producto = await producto.find().lean();
+		console.log(Producto_carrito);
+		res.render("tienda",{Producto_carrito, Producto})
+	})
+
+})
+
 //Rutas Finales
 rutas.get('/',(req,res)=>{
 	res.render("principal");
@@ -103,25 +133,27 @@ rutas.post('/Inventarios', async(req,res) => {
 //Cliente
 rutas.post('/Tienda', async(req,res) => {
 	await Creacion_De_Usuario(req,res)
-		.then((resp) => {
+		.then(async(resp) => {
 			if(resp == false) {
 				console.log('Error en creacion')
 			} else {
 				token_actuall = resp;
-				res.render("tienda");
+				const Producto = await producto.find().lean();
+				res.render("tienda",{Producto:Producto});
 			}
 		})
 	console.log(`Token actual es ${token_actuall}`)
 })
 rutas.post('/Tiendas', async(req,res) => {
 	await Inicio_de_Sesion_Usuarios(req,res)
-		.then((resp) => {
+		.then(async(resp) => {
 			if (resp == false) {
 				console.log('No iniciaste sesion')
 				res.render('Err')
 			} else {
 				token_actuall = resp;
-				res.render("tienda");
+				const Producto = await producto.find().lean();
+				res.render("tienda",{Producto:Producto});
 			}
 		})
 	console.log(`El token de inicio de sesion es ${token_actuall}`)
