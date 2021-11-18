@@ -4,15 +4,13 @@ const express = require('express');
 //express router
 const rutas = express.Router()
 
-const user = require('../models/user')
-
-//llamado de controladores
-/* const {Creacion_De_Admin, Creacion_De_Usuario} = require('../controllers/AllCreation');
-const {Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins}= require('../controllers/Inicio_Sesion');
-const {VerifyTokenUser, VerifyTokenAdmin}= require('../controllers/Verificaciones'); */
-
-//actually token
-let actually_token;
+//Controladores
+const {Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto} = require('../controllers/AllCreation')
+const { Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins } = require('../controllers/Inicio_Sesion')
+const { VerifyTokenUser } = require('../controllers/Verificaciones')
+const {Busqueda} = require('../controllers/busquedas');
+//JSONtoken
+let token_actuall;
 
 //Rutas de la interfaz
 rutas.get('/',(req,res)=>{
@@ -22,18 +20,16 @@ rutas.get('/1',(req,res)=>{
     Inicio_de_Sesion_Admins(req,res);
 	res.render("inventario");
 })
-rutas.post('/2',(req,res)=>{
-    Creacion_De_Usuario(req,res)
-	res.render("tienda");
-})
-rutas.get('/2',(req,res)=>{
-    Inicio_de_Sesion_Usuarios(req,res);
-	res.render("tienda");
-})
 //Inventario
-rutas.post('/1',(req,res)=>{
-    //CREAR PRODUCTO
-	res.render("inventario");
+rutas.post('/CrearProducto',async (req,res)=>{
+    await Nuevo_Producto(req,res)
+		.then((resp) => {
+			if(resp == false) {
+				console.log('Error en creacion')
+			} else {
+				res.render("inventario");
+			}
+		})	
 })
 rutas.post('/1',(req,res)=>{
     console.log('bien compa')
@@ -42,33 +38,30 @@ rutas.post('/1',(req,res)=>{
 	res.end();
 })
 
-//requerimientos pa probar
-const { Creacion_De_Usuario } = require('../controllers/AllCreation')
-const { Inicio_de_Sesion_Usuarios } = require('../controllers/Inicio_Sesion')
-const { VerifyTokenUser } = require('../controllers/Verificaciones')
-
 //Rutas de Prueba de Funciones Finales
-let token_actuall
 
-rutas.post('/pruebadecreaciondeusuario', async(req,res) => {
+rutas.post('/Tienda', async(req,res) => {
 	await Creacion_De_Usuario(req,res)
 		.then((resp) => {
 			if(resp == false) {
 				console.log('Error en creacion')
 			} else {
-				token_actuall = resp
+				token_actuall = resp;
+				res.render("tienda");
 			}
 		})
 	console.log(`Token actual es ${token_actuall}`)
 })
 
-rutas.post('/pruebadeiniciarsesion', async(req,res) => {
+rutas.post('/Tiendas', async(req,res) => {
 	await Inicio_de_Sesion_Usuarios(req,res)
 		.then((resp) => {
 			if (resp == false) {
 				console.log('No iniciaste sesion')
+				res.render('Err')
 			} else {
-				token_actuall = resp
+				token_actuall = resp;
+				res.render("tienda");
 			}
 		})
 	console.log(`El token de inicio de sesion es ${token_actuall}`)
@@ -84,6 +77,5 @@ rutas.get('/pruebadeverificacion', async(req,res) => {
 			}
 		})
 })
-
 //exportacion
 module.exports = rutas;
