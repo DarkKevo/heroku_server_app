@@ -5,11 +5,12 @@ const rutas = express.Router();
 const producto = require('../models/producto');
 
 //Controladores
-const {Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto} = require('../controllers/AllCreation')
-const { Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins } = require('../controllers/Inicio_Sesion')
-const { VerifyTokenUser } = require('../controllers/Verificaciones')
+const {Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto} = require('../controllers/AllCreation');
+const { Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins } = require('../controllers/Inicio_Sesion');
+const { VerifyTokenUser } = require('../controllers/Verificaciones');
 const {Busqueda} = require('../controllers/busquedas');
-const {editar_datos} = require('../controllers/edicion') 
+const {editar_datos} = require('../controllers/edicion'); 
+const {eliminar} = require('../controllers/eliminar')
 //JSONtoken
 let token_actuall;
 
@@ -74,31 +75,26 @@ rutas.get('/Actualizar/:id', async (req,res) => {
 	})
 rutas.post('/Actualizar/:id', async(req,res) => {
 	await editar_datos(req,res)
-		.then( async (resp) => {
-			if (resp == false) {
-				console.log('No se encontro el valor a editar');
-				res.render('Err');
-			} else {
-			//AQUI VA LA RUTA
-				res.render('Actualizar');		
-			}
+		.then( async(nProducto) => {
+			console.log(nProducto);
+			const Producto = await producto.find().lean();
+			console.log(Producto)
+			res.render("inventario",{Producto:Producto})
 		})
-})
+		.catch(err => console.log(err)) 
+	})
 //Eliminar
-rutas.get('/Inventario', async(req,res) => {
-	await Inicio_de_Sesion_Admins(req,res)
+rutas.get('/Eliminado/:id', async(req,res) => {
+	await eliminar(req,res)
 		.then( async (resp) => {
 			if (resp == false) {
-				console.log('No iniciaste sesion')
 				res.render('Err')
 			} else {
-				token_actuall = resp;
 				const Producto = await producto.find().lean();
 				console.log(Producto)
 				res.render("inventario",{Producto:Producto});
 			}
 		})
-	console.log(`El token de inicio de sesion es ${token_actuall}`)
 })
 
 rutas.post('/Tienda', async(req,res) => {

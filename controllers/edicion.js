@@ -1,21 +1,16 @@
-const user = require('../models/user')
+const producto = require('../models/producto')
 
 async function editar_datos(req,res) {
-    try {
-        await user.update({_id: req.body.Id}, {
-            nombre: req.body.Nombre,
-            tipo: req.body.Tipo,
-            marca: req.body.Marca,
-            descripcion: req.body.Descripcion,
-            existencia: req.body.Existencia,
-            precio: req.body.Precio
-        })
-    } catch (error) {
-        console.log(error)
-        return false
-    }
-    console.log('Data Update its Ok')
-    return true
+
+    const nProducto = await producto.updateOne({_id:req.params.id},{
+        nombre: req.body.Nombre,
+        tipo: req.body.Tipo,
+        marca: req.body.Marca,
+        descripcion: req.body.Descripcion,
+        existencia: req.body.Existencia,
+        precio: req.body.Precio
+    })
+    return nProducto;
 }
 
 module.exports = { editar_datos }
