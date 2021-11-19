@@ -7,6 +7,7 @@ const producto = require("../models/producto");
 const registros = require("../models/registro");
 
 //Controladores
+
 const {
   Creacion_De_Admin,
   Creacion_De_Usuario,
@@ -198,6 +199,7 @@ rutas.get("/pruebadeverificacion", async (req, res) => {
       res.end()
     }
   });
+
 });
 //exportacion
 module.exports = rutas;
