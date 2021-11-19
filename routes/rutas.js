@@ -39,7 +39,15 @@ rutas.all('/kevoshop',async(req,res,next)=>{
     next();
   }
 })
-
+rutas.all('/Kevoshop0',async(req,res,next)=>{
+  let resp = await VerifyTokenAdmin(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    console.log("Valid Token Nice");
+    next();
+  }
+})
 //Inventario
 //Crear Producto
 rutas.post("/kevoshop", async (req, res) => {
@@ -51,12 +59,12 @@ rutas.post("/kevoshop", async (req, res) => {
     res.render("inventario", { Producto: Producto });
   }
 });
-//Actualizar Producto
-rutas.get("/Actualizar/:id", async (req, res) => {
+//Actualizar Producto Actualizar
+rutas.get("/kevoshop/:id", async (req, res) => {
   const Producto = await producto.findById(req.params.id).lean();
   res.render("Actualizar", { Producto });
 });
-rutas.post("/Actualizar/:id", async (req, res) => {
+rutas.post("/kevoshop/:id", async (req, res) => {
 let resp = await editar_datos(req, res)
 if (resp == false) {
   res.render("Err")
@@ -67,7 +75,7 @@ if (resp == false) {
   }
 });
 //Eliminar Producto
-rutas.get("/Eliminado/:id", async (req, res) => {
+rutas.get("/Kevoshop0/:id", async (req, res) => {
 let resp = await eliminar(req, res)
 if (resp == false) {
   res.render("Err");
@@ -77,9 +85,10 @@ if (resp == false) {
 }
 });
 //Buscar
-rutas.post("/Buscar", async (req, res) => {
+rutas.post("/Kevoshop0", async (req, res) => {
   await Busqueda(req, res)
 });
+
 
 //Tienda
 //Buscar
@@ -171,17 +180,5 @@ rutas.get("/Logout",(req, res) => {
   res.render("principal");
 });
 
-rutas.get("/pruebadeverificacion", async (req, res) => {
-  await VerifyTokenUser(token_actuall).then((resp) => {
-    if (!resp) {
-      console.log("token expired or invalid");
-      res.end()
-    } else {
-      console.log("Valid Token Nice");
-      res.end()
-    }
-  });
-
-});
 //exportacion
 module.exports = rutas;
