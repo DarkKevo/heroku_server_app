@@ -31,30 +31,25 @@ let token_actuall;
 
 //Midlle
 rutas.all('/kevoshop',async(req,res,next)=>{
-  /* await VerifyTokenAdmin(token_actuall).then((resp) => {
-    if (!resp) {
-      console.log("token expired or invalid");
-      
-    } else {
-      console.log("Valid Token Nice");
-      
-    }
-  }); */
-  console.log('Todo nices')
-  next();
+  let resp = await VerifyTokenAdmin(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    console.log("Valid Token Nice");
+    next();
+  }
 })
 
 //Inventario
 //Crear Producto
 rutas.post("/kevoshop", async (req, res) => {
-  await Nuevo_Producto(req, res).then(async (resp) => {
-    if (resp == false) {
-      console.log("Error en creacion");
-    } else {
-      const Producto = await producto.find().lean();
-      res.render("inventario", { Producto: Producto });
-    }
-  });
+  let resp = await Nuevo_Producto(req, res)
+  if (resp == false) {
+    console.log("Error en creacion");
+  } else {
+    const Producto = await producto.find().lean();
+    res.render("inventario", { Producto: Producto });
+  }
 });
 //Actualizar Producto
 rutas.get("/Actualizar/:id", async (req, res) => {
@@ -62,51 +57,40 @@ rutas.get("/Actualizar/:id", async (req, res) => {
   res.render("Actualizar", { Producto });
 });
 rutas.post("/Actualizar/:id", async (req, res) => {
-  await editar_datos(req, res)
-    .then(async (nProducto) => {
-      console.log(nProducto);
-      const Producto = await producto.find().lean();
-      console.log(Producto);
-      res.render("inventario", { Producto: Producto });
-    })
-    .catch((err) => console.log(err));
+let resp = await editar_datos(req, res)
+if (resp == false) {
+  res.render("Err")
+} else {
+    const Producto = await producto.find().lean();
+    console.log(Producto);
+    res.render("inventario", { Producto: Producto });
+  }
 });
 //Eliminar Producto
 rutas.get("/Eliminado/:id", async (req, res) => {
-  await eliminar(req, res).then(async (resp) => {
-    if (resp == false) {
-      res.render("Err");
-    } else {
-      const Producto = await producto.find().lean();
-      console.log(Producto);
-      res.render("inventario", { Producto: Producto });
-    }
-  });
+let resp = await eliminar(req, res)
+if (resp == false) {
+  res.render("Err");
+} else {
+  const Producto = await producto.find().lean();
+  res.render("inventario", { Producto: Producto });
+}
 });
 //Buscar
 rutas.post("/Buscar", async (req, res) => {
   await Busqueda(req, res)
-    .then((producto) => console.log(producto))
-    .catch((err) => {
-      console.log(err);
-      res.render("Err");
-    });
 });
 
 //Tienda
 //Buscar
 rutas.post("/BuscarT", async (req, res) => {
   await BusquedaTienda(req, res)
-    .then((producto) => console.log(producto))
-    .catch((err) => {
-      console.log(err);
-      res.render("Err");
-    });
 });
 //Agregar al carrito
-rutas.get("/Agregar/:id", async (req, res) => {
+rutas.get("/Agregar/:id", (req, res) => {
   restar(req, res);
-  await objeto(req, res).then(async (resp) => {
+  objeto(req, res)
+  .then(async (resp) => {
     await Nuevo_registro(resp.nombre, resp.tipo, resp.marca, resp.descripcion, resp.existencia, resp.precio).then(async (respp) => {
       if (respp == false) {
         res.render("Err");
@@ -123,7 +107,7 @@ rutas.get('/Quitado/:id',(req,res)=>{
   eliminar_registro(req,res)
 	.then(async(resp)=>{
 		if(!resp){
-
+      res.render("Err")
     } else {
     const Producto = await producto.find().lean();
     const Registro = await registros.find().lean();
@@ -139,61 +123,54 @@ rutas.get("/", (req, res) => {
 });
 //Admin
 rutas.post("/Inventario", async (req, res) => {
-  await Creacion_De_Admin(req, res).then(async (resp) => {
-    if (resp == false) {
-      console.log("Error en creacion");
-    } else {
-      token_actuall = resp;
-      const Producto = await producto.find().lean();
-      res.render("inventario", { Producto: Producto });
-    }
-  });
-  console.log(`El token de inicio de sesion es ${token_actuall}`);
+let resp = await Creacion_De_Admin(req, res)
+if (resp == false) {
+  res.render("Err")
+} else {
+  token_actuall = resp;
+  const Producto = await producto.find().lean();
+  res.render("inventario", { Producto: Producto });
+}
 });
 rutas.post("/Inventarios", async (req, res) => {
-  await Inicio_de_Sesion_Admins(req, res).then(async (resp) => {
-    if (resp == false) {
-      console.log("No iniciaste sesion");
-      res.render("Err");
-    } else {
-      token_actuall = resp;
-      const Producto = await producto.find().lean();
-      res.render("inventario", { Producto: Producto });
-    }
-  });
-  console.log(`El token de inicio de sesion es ${token_actuall}`);
+let resp = await Inicio_de_Sesion_Admins(req, res)
+if (resp == false) {
+  console.log("No iniciaste sesion");
+  res.render("Err");
+} else {
+  token_actuall = resp;
+  const Producto = await producto.find().lean();
+  res.render("inventario", { Producto: Producto });
+}
 });
 //Cliente
 rutas.post("/Tienda", async (req, res) => {
-  await Creacion_De_Usuario(req, res).then(async (resp) => {
-    if (resp == false) {
-      console.log("Error en creacion");
-    } else {
-      token_actuall = resp;
-      const Producto = await producto.find().lean();
-      res.render("tienda", { Producto: Producto });
-    }
-  });
-  console.log(`Token actual es ${token_actuall}`);
+let resp = await Creacion_De_Usuario(req, res)
+if (resp == false) {
+  console.log("Error en creacion");
+} else {
+  token_actuall = resp;
+  const Producto = await producto.find().lean();
+  res.render("tienda", { Producto: Producto });
+}
 });
 rutas.post("/Tiendas", async (req, res) => {
-  await Inicio_de_Sesion_Usuarios(req, res).then(async (resp) => {
-    if (resp == false) {
-      console.log("No iniciaste sesion");
-      res.render("Err");
-    } else {
-      token_actuall = resp;
-      const Producto = await producto.find().lean();
-      res.render("tienda", { Producto: Producto });
-    }
-  });
-  console.log(`El token de inicio de sesion es ${token_actuall}`);
+let resp = await Inicio_de_Sesion_Usuarios(req, res)
+if (resp == false) {
+  console.log("No iniciaste sesion");
+  res.render("Err");
+} else {
+  token_actuall = resp;
+  const Producto = await producto.find().lean();
+  res.render("tienda", { Producto: Producto });
+}
 });
 
 rutas.get("/Logout",(req, res) => {
-  token_actuall= false;
+  token_actuall= undefined;
   res.render("principal");
 });
+
 rutas.get("/pruebadeverificacion", async (req, res) => {
   await VerifyTokenUser(token_actuall).then((resp) => {
     if (!resp) {

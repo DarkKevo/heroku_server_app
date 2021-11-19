@@ -6,6 +6,7 @@ const registro = require("../models/registro")
 async function eliminar(req, res) {
 	try {
 		await producto.findByIdAndDelete(req.params.id);
+        console.log('Data Erased');
 	} catch (error) {
 		console.log(error);
 		return false;
