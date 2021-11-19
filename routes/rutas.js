@@ -31,7 +31,7 @@ let token_actuall;
 
 //Midlle
 rutas.all('/kevoshop',async(req,res,next)=>{
-  await VerifyTokenAdmin(token_actuall).then((resp) => {
+  /* await VerifyTokenAdmin(token_actuall).then((resp) => {
     if (!resp) {
       console.log("token expired or invalid");
       
@@ -39,7 +39,8 @@ rutas.all('/kevoshop',async(req,res,next)=>{
       console.log("Valid Token Nice");
       
     }
-  });
+  }); */
+  console.log('Todo nices')
   next();
 })
 
@@ -189,6 +190,10 @@ rutas.post("/Tiendas", async (req, res) => {
   console.log(`El token de inicio de sesion es ${token_actuall}`);
 });
 
+rutas.get("/Logout",(req, res) => {
+  token_actuall= false;
+  res.render("principal");
+});
 rutas.get("/pruebadeverificacion", async (req, res) => {
   await VerifyTokenUser(token_actuall).then((resp) => {
     if (!resp) {
