@@ -15,4 +15,21 @@ async function editar_datos(req, res) {
 	return nProducto;
 }
 
-module.exports = { editar_datos };
+
+async function restar (req,res) {
+    let objeto = await producto.findOne({_id: req.params.id}).lean()
+    console.log(objeto.existencia)
+    await producto.updateOne({_id: req.params.id}, {
+        existencia: objeto.existencia - 1
+    })
+}
+
+async function sumar (req,res) {
+    let objetos = await producto.findOne({_id: req.params.id}).lean()
+    console.log(objetos.existencia)
+    await producto.updateOne({_id: req.params.id}, {
+        existencia: objetos.existencia + 1
+    })
+}
+module.exports = { editar_datos, restar ,sumar }
+
