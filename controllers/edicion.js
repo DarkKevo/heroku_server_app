@@ -25,10 +25,10 @@ async function restar (req,res) {
 }
 
 async function sumar (req,res) {
-    let objeto = await producto.findOne({_id: req.params.id}).lean()
-    console.log(objeto.existencia)
+    let objetos = await producto.findOne({_id: req.params.id}).lean()
+    console.log(objetos.existencia)
     await producto.updateOne({_id: req.params.id}, {
-        existencia: objeto.existencia + 1
+        existencia: objetos.existencia + 1
     })
 }
 module.exports = { editar_datos, restar ,sumar }

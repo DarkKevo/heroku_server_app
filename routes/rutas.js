@@ -18,7 +18,7 @@ const {
   Inicio_de_Sesion_Usuarios,
   Inicio_de_Sesion_Admins,
 } = require("../controllers/Inicio_Sesion");
-const { VerifyTokenUser } = require("../controllers/Verificaciones");
+const { VerifyTokenUser, VerifyTokenAdmin } = require("../controllers/Verificaciones");
 const {
   Busqueda,
   BusquedaTienda,
@@ -29,9 +29,23 @@ const { eliminar, eliminar_registro } = require("../controllers/eliminar");
 //JSONtoken
 let token_actuall;
 
+//Midlle
+rutas.all('/kevoshop',async(req,res,next)=>{
+  await VerifyTokenAdmin(token_actuall).then((resp) => {
+    if (!resp) {
+      console.log("token expired or invalid");
+      
+    } else {
+      console.log("Valid Token Nice");
+      
+    }
+  });
+  next();
+})
+
 //Inventario
 //Crear Producto
-rutas.post("/CrearProducto", async (req, res) => {
+rutas.post("/kevoshop", async (req, res) => {
   await Nuevo_Producto(req, res).then(async (resp) => {
     if (resp == false) {
       console.log("Error en creacion");
@@ -90,12 +104,12 @@ rutas.post("/BuscarT", async (req, res) => {
 });
 //Agregar al carrito
 rutas.get("/Agregar/:id", async (req, res) => {
+  restar(req, res);
   await objeto(req, res).then(async (resp) => {
     await Nuevo_registro(resp.nombre, resp.tipo, resp.marca, resp.descripcion, resp.existencia, resp.precio).then(async (respp) => {
       if (respp == false) {
         res.render("Err");
       } else {
-        restar(req, res);
         const Producto = await producto.find().lean();
         const Registro = await registros.find().lean();
         res.render("Tienda", { Registro, Producto });
@@ -103,20 +117,20 @@ rutas.get("/Agregar/:id", async (req, res) => {
     });
   });
 });
-/* rutas.get('/Quitado/:pos',(req,res)=>{
-	console.log("haber"+req.params.pos)
-	Producto_carrito.forEach(index => {
-		if (index._id == `new ObjectId(${req.params.pos})`) {
-			Producto_carrito.splice(Producto_carrito.indexOf(index),1)
-		}
-	})
-	async()=>{
-		const Producto = await producto.find().lean();
-		console.log(Producto_carrito);
-		res.render("tienda",{Producto_carrito, Producto})
-	}
+rutas.get('/Quitado/:id',(req,res)=>{
+	sumar(req,res);
+  eliminar_registro(req,res)
+	.then(async(resp)=>{
+		if(!resp){
 
-}) */
+    } else {
+    const Producto = await producto.find().lean();
+    const Registro = await registros.find().lean();
+		res.render("tienda",{Registro, Producto})
+    }
+	})
+
+}) 
 
 //Rutas Finales
 rutas.get("/", (req, res) => {
@@ -177,10 +191,12 @@ rutas.post("/Tiendas", async (req, res) => {
 
 rutas.get("/pruebadeverificacion", async (req, res) => {
   await VerifyTokenUser(token_actuall).then((resp) => {
-    if (resp == false) {
+    if (!resp) {
       console.log("token expired or invalid");
+      res.end()
     } else {
       console.log("Valid Token Nice");
+      res.end()
     }
   });
 
