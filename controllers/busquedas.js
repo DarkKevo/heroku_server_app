@@ -133,4 +133,9 @@ async function BusquedaTienda(req, res) {
 	} 
 }
 
-module.exports = {Busqueda, BusquedaTienda}
+async function objeto(req,res) {
+	let pproducto = await producto.findOne({_id: req.params.id})
+	return pproducto
+}
+
+module.exports = {Busqueda, BusquedaTienda,objeto}

@@ -17,14 +17,14 @@
   <!--Tabla del carrito-->
   
   <tbody>
-    {{#each Producto_carrito}}
+    {{#each Registro}}
     <tr>
       <th scope="row">-</th>
       <td>{{nombre}}</td>
       <td>{{descripcion}}</td>
       <td>{{precio}}</td>      
       <th scope="col">
-        <a href="/Quitado"
+        <a href="/Quitado/{{_id}}"
           class="btn btn-outline-danger"
         >
           Quitar</a></th>
@@ -91,7 +91,7 @@
               <td>{{tipo}}</td>
               <td>{{precio}}</td>      
               <th scope="col">
-                <a href="/Agregado/{{_id}}"
+                <a href="/Agregar/{{_id}}"
                   class="btn btn-outline-success">
                   Agregar</a></th>
             </tr>
