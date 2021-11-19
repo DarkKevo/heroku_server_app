@@ -16,7 +16,7 @@ async function Inicio_de_Sesion_Usuarios(req, res) {
 	const userfind = await user.findOne({ email: req.body.email });
 	//verificacion de existencia
 	if (!userfind) {
-		console.log('Email no existente')
+		console.log('Email no existente');
 		return false;
 	}
 	//verificacion de password
@@ -31,7 +31,7 @@ async function Inicio_de_Sesion_Usuarios(req, res) {
 	const token = jsonwebtoken.sign({ id: userfind._id }, config.secret, {
 		expiresIn: 60 * 15,
 	});
-	console.log(token)
+	console.log(token);
 	return token;
 }
 
@@ -56,7 +56,7 @@ async function Inicio_de_Sesion_Admins(req, res) {
 	const token = jsonwebtoken.sign({ id: adminfind._id }, config.secret, {
 		expiresIn: 60 * 15,
 	});
-	console.log(token)
+	console.log(token);
 	return token;
 }
 
