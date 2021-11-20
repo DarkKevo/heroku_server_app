@@ -29,9 +29,13 @@ db.on('error', (err) => {
 
 //Configuraciones
 
+//puerto
 servidor.set('port', 3000);
 
+//views
 servidor.set('views', path.join(__dirname, 'views'));
+
+//engine
 servidor.engine(
 	'.hbs',
 	engine({
@@ -41,6 +45,8 @@ servidor.engine(
 		extname: '.hbs',
 	})
 );
+
+//view engine
 servidor.set('view engine', '.hbs');
 
 //Middlewares
@@ -50,8 +56,6 @@ servidor.use(express.urlencoded({ extended: false }));
 
 //Routes
 servidor.use(require('./routes/rutas'));
-/*let routes = require('./routes/rutas')
-servidor.use('/server', routes)*/
 
 //Listen
 

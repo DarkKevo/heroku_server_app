@@ -1,5 +1,9 @@
+//requerimiento de producto
 const producto = require('../models/producto');
+//requerimiento de registro
+const registro = require('../models/registro');
 
+//funcion de editar datos en productos
 async function editar_datos(req, res) {
 	try {
 		const nProducto = await producto.updateOne(
@@ -13,29 +17,45 @@ async function editar_datos(req, res) {
 				precio: req.body.Precio,
 			}
 		);
-		//return nProducto;
-		return true
+		return true;
 	} catch (error) {
-		return false
+		return false;
 	}
 }
 
-
-async function restar (req,res) {
-    let objeto = await producto.findOne({_id: req.params.id}).lean()
-	console.log(objeto.existencia)
-    await producto.updateOne({_id: req.params.id}, {
-        existencia: objeto.existencia - 1
-    })
+//funcion de restar de inventario
+async function restar(req, res) {
+	let objeto = await producto.findOne({ _id: req.params.id }).lean();
+	console.log(objeto.existencia);
+	if (objeto.existencia <= 0) {
+		return false
+	} else {
+		await producto.updateOne(
+			{ _id: req.params.id },
+			{
+				existencia: objeto.existencia - 1,
+			}
+		);
+	}
 }
 
-async function sumar (req,res) {
-    let objeto = await producto.findOne({_id: req.params.id}).lean()
-	console.log(typeof objeto)
-    /* console.log(objeto.existencia)
-    await producto.updateOne({_id: req.params.id}, {
-        existencia: objeto.existencia + 1
-    }) */
+//funcion de sumar
+async function sumar(req, res) {
+	let objeto = await registro.findOne({ _id: req.params.id }).lean();
+	let objeto_2 = await producto.findOne({
+		nombre: objeto.nombre,
+		tipo: objeto.tipo,
+		marca: objeto.marca,
+		descripcion: objeto.descripcion,
+		precio: objeto.precio,
+	});
+	await producto.updateOne(
+		{ _id: objeto_2.id },
+		{
+			existencia: objeto_2.existencia + 1,
+		}
+	);
 }
-module.exports = { editar_datos, restar ,sumar }
 
+//exportacion de funciones
+module.exports = { editar_datos, restar, sumar };
