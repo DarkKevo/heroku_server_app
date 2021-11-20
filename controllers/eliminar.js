@@ -27,5 +27,15 @@ async function eliminar_registro(req,res) {
     return true
 }
 
-module.exports = { eliminar, eliminar_registro }
+async function DropCar (database) {
+    database.deleteMany({} , function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("success")
+        }
+    })
+}
+
+module.exports = { eliminar, eliminar_registro, DropCar }
 

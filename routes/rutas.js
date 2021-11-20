@@ -25,46 +25,40 @@ const {
   objeto,
 } = require("../controllers/busquedas");
 const { editar_datos, restar, sumar } = require("../controllers/edicion");
-const { eliminar, eliminar_registro } = require("../controllers/eliminar");
+const { eliminar, eliminar_registro, DropCar } = require("../controllers/eliminar");
 //JSONtoken
 let token_actuall;
 
-//Midlle
-rutas.all('/kevoshop',async(req,res,next)=>{
-  let resp = await VerifyTokenAdmin(token_actuall)
-  if (resp == false) {
-    res.render("Err")
-  } else {
-    console.log("Valid Token Nice");
-    next();
-  }
-})
-rutas.all('/Kevoshop0',async(req,res,next)=>{
-  let resp = await VerifyTokenAdmin(token_actuall)
-  if (resp == false) {
-    res.render("Err")
-  } else {
-    console.log("Valid Token Nice");
-    next();
-  }
-})
 //Inventario
 //Crear Producto
-rutas.post("/kevoshop", async (req, res) => {
-  let resp = await Nuevo_Producto(req, res)
+rutas.post("/Crear", async (req, res) => {
+  let resp = await VerifyTokenAdmin(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    let resp = await Nuevo_Producto(req, res)
+    if (resp == false) {
+      console.log("Error en creacion");
+    } else {
+      const Producto = await producto.find().lean();
+      res.render("inventario", { Producto: Producto });
+    }
+
+
+  /* let resp = await Nuevo_Producto(req, res)
   if (resp == false) {
     console.log("Error en creacion");
   } else {
     const Producto = await producto.find().lean();
     res.render("inventario", { Producto: Producto });
-  }
-});
+  } */
+}});
 //Actualizar Producto Actualizar
-rutas.get("/kevoshop/:id", async (req, res) => {
+rutas.get("/Actualizar/:id", async (req, res) => {
   const Producto = await producto.findById(req.params.id).lean();
   res.render("Actualizar", { Producto });
 });
-rutas.post("/kevoshop/:id", async (req, res) => {
+rutas.post("/Actualizar/:id", async (req, res) => {
 let resp = await editar_datos(req, res)
 if (resp == false) {
   res.render("Err")
@@ -75,32 +69,52 @@ if (resp == false) {
   }
 });
 //Eliminar Producto
-rutas.get("/Kevoshop0/:id", async (req, res) => {
-let resp = await eliminar(req, res)
-if (resp == false) {
-  res.render("Err");
-} else {
-  const Producto = await producto.find().lean();
-  res.render("inventario", { Producto: Producto });
-}
+rutas.get("/Eliminar/:id", async (req, res) => {
+  let resp = await VerifyTokenAdmin(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    let resp = await eliminar(req, res)
+    if (resp == false) {
+    res.render("Err");
+    } else {
+    const Producto = await producto.find().lean();
+    res.render("inventario", { Producto: Producto });
+  }}
 });
 //Buscar
-rutas.post("/Kevoshop0", async (req, res) => {
-  await Busqueda(req, res)
+rutas.post("/Buscar", async (req, res) => {
+  let resp = await VerifyTokenAdmin(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    await Busqueda(req, res)
+  }
+  
 });
 
 
 //Tienda
 //Buscar
 rutas.post("/BuscarT", async (req, res) => {
-  await BusquedaTienda(req, res)
+  let resp = await VerifyTokenUser(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    await BusquedaTienda(req, res)
+  }
 });
 //Agregar al carrito
-rutas.get("/Agregar/:id", (req, res) => {
-  restar(req, res);
-  objeto(req, res)
-  .then(async (resp) => {
-    await Nuevo_registro(resp.nombre, resp.tipo, resp.marca, resp.descripcion, resp.existencia, resp.precio).then(async (respp) => {
+rutas.get("/Agregado/:id", async (req, res) => {
+  let resp = await VerifyTokenUser(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    restar(req, res)
+    .then(() => {
+      objeto(req, res)
+      .then(async (resp) => {
+      await Nuevo_registro(resp.nombre, resp.tipo, resp.marca, resp.descripcion, resp.existencia, resp.precio).then(async (respp) => {
       if (respp == false) {
         res.render("Err");
       } else {
@@ -110,9 +124,27 @@ rutas.get("/Agregar/:id", (req, res) => {
       }
     });
   });
+})}
 });
-rutas.get('/Quitado/:id',(req,res)=>{
-	sumar(req,res);
+rutas.get('/Quitado/:id',async(req,res)=>{
+	let resp = await VerifyTokenUser(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+      sumar(req,res);
+      eliminar_registro(req,res)
+      .then(async(resp)=>{
+      if(!resp){
+        res.render("Err")
+      } else {
+      const Producto = await producto.find().lean();
+      const Registro = await registros.find().lean();
+      res.render("tienda",{Registro, Producto})
+      }})
+  }
+  
+  /* 
+  sumar(req,res);
   eliminar_registro(req,res)
 	.then(async(resp)=>{
 		if(!resp){
@@ -122,11 +154,11 @@ rutas.get('/Quitado/:id',(req,res)=>{
     const Registro = await registros.find().lean();
 		res.render("tienda",{Registro, Producto})
     }
-	})
+	}) */
 
 }) 
 
-//Rutas Finales
+//Rutas Generales
 rutas.get("/", (req, res) => {
   res.render("principal");
 });
@@ -175,9 +207,26 @@ if (resp == false) {
 }
 });
 
-rutas.get("/Logout",(req, res) => {
-  token_actuall= undefined;
-  res.render("principal");
+//Log out Admin
+rutas.get("/LogoutA",async(req, res) => {
+  let resp = await VerifyTokenAdmin(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+    token_actuall= undefined;
+    res.render("principal"); 
+  }
+});
+ //Log out Cliente
+rutas.get("/Logout",async(req, res) => {
+  let resp = await VerifyTokenUser(token_actuall)
+  if (resp == false) {
+    res.render("Err")
+  } else {
+      DropCar(registros)
+      token_actuall= undefined;
+      res.render("principal");
+  }
 });
 
 //exportacion
