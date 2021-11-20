@@ -24,13 +24,14 @@ const admin_object = new Schema({
 
 //Metodos de Modelo
 
+//encriptar password
 admin_object.methods.encriptar = async (password) => {
 	//Mejorar seguridad en password
 	const salt = await bcrypt.genSalt(10);
 	//encriptar password
 	return bcrypt.hash(password, salt);
 };
-
+//verificar password
 admin_object.methods.verificar = function (password) {
 	return bcrypt.compare(password, this.password);
 };

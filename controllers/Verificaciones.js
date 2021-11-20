@@ -14,8 +14,8 @@ const config = require('./config');
 async function VerifyTokenUser(TokenActual) {
 	const token = TokenActual;
 	if (token == undefined) {
-		console.log("No Token provided")
-		return false
+		console.log('No Token provided');
+		return false;
 	} else {
 		//decodificacion
 		const decoded = jsonwebtoken.verify(token, config.secret);
@@ -33,16 +33,15 @@ async function VerifyTokenUser(TokenActual) {
 }
 
 //verificacion de token de admin
-
-async function VerifyTokenAdmin (TokenActual) {
-    const token = TokenActual
+async function VerifyTokenAdmin(TokenActual) {
+	const token = TokenActual;
 	if (token == undefined) {
-		console.log("No Token provided")
-		return false
+		console.log('No Token provided');
+		return false;
 	} else {
 		//decodificacion
-		const decoded = jsonwebtoken.verify(token, config.secret)
-		const id = decoded.id
+		const decoded = jsonwebtoken.verify(token, config.secret);
+		const id = decoded.id;
 		//busqueda
 		const busqueda = await adm.findById(id, { password: 0 });
 		if (!busqueda) {
@@ -55,4 +54,5 @@ async function VerifyTokenAdmin (TokenActual) {
 	}
 }
 
+//exportacion de funciones
 module.exports = { VerifyTokenUser, VerifyTokenAdmin };

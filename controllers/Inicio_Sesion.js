@@ -60,5 +60,5 @@ async function Inicio_de_Sesion_Admins(req, res) {
 	return token;
 }
 
-//exportacion de modulos
+//exportacion de funciones
 module.exports = { Inicio_de_Sesion_Usuarios, Inicio_de_Sesion_Admins };
