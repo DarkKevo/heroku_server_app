@@ -72,7 +72,7 @@ async function Busqueda(req, res) {
 					console.log(Producto);
 					res.render('inventario', { Producto });
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => res.render("Err"));
 			break;
 		default:
 			res.send(
@@ -139,7 +139,7 @@ async function BusquedaTienda(req, res) {
 					console.log(Producto);
 					res.render("tienda",{Producto});
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => res.render('Err'));
 			break;
 		default:
 			res.send(
