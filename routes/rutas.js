@@ -64,7 +64,7 @@ rutas.post('/Crear', async (req, res) => {
 		}
 	}
 });
-//Actualizar Producto Actualizar
+//Actualizar Producto 
 rutas.get('/Actualizar/:id', async (req, res) => {
 	const Producto = await producto.findById(req.params.id).lean();
 	res.render('Actualizar', { Producto });
@@ -148,6 +148,7 @@ rutas.get('/Agregado/:id', async (req, res) => {
 		});
 	}
 });
+//Quitar del carrito
 rutas.get('/Quitado/:id', async (req, res) => {
 	let resp = await VerifyTokenUser(token_actuall);
 	if (resp == false) {
