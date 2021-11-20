@@ -47,6 +47,7 @@ const {
 
 //JSONWebtoken
 let token_actuall;
+let total_a_pagar=0;
 
 //Inventario
 //Crear Producto
@@ -116,6 +117,9 @@ rutas.post('/BuscarT', async (req, res) => {
 });
 //Agregar al carrito
 rutas.get('/Agregado/:id', async (req, res) => {
+	//totalAQUISeIncrementa
+	total_a_pagar;
+
 	let resp = await VerifyTokenUser(token_actuall);
 	if (resp == false) {
 		res.render('Err');
@@ -140,7 +144,7 @@ rutas.get('/Agregado/:id', async (req, res) => {
 						} else {
 							const Producto = await producto.find().lean();
 							const Registro = await registros.find().lean();
-							res.render('Tienda', { Registro, Producto });
+							res.render('Tienda', { Registro, Producto,total_a_pagar });
 						}
 					});
 				});
@@ -150,6 +154,8 @@ rutas.get('/Agregado/:id', async (req, res) => {
 });
 //Quitar del carrito
 rutas.get('/Quitado/:id', async (req, res) => {
+	//aqui se ejecuta de nuevo el sumar, para que actualice el valor
+	
 	let resp = await VerifyTokenUser(token_actuall);
 	if (resp == false) {
 		res.render('Err');
@@ -161,7 +167,7 @@ rutas.get('/Quitado/:id', async (req, res) => {
 				} else {
 					const Producto = await producto.find().lean();
 					const Registro = await registros.find().lean();
-					res.render('tienda', { Registro, Producto });
+					res.render('tienda', { Registro, Producto, total_a_pagar });
 				}
 			});
 		});
