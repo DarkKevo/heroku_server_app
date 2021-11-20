@@ -8,7 +8,7 @@ const adm = require('../models/admin');
 const producto = require('../models/producto');
 
 //requerimiento de modelo de registros
-const registro = require("../models/registro")
+const registro = require('../models/registro');
 
 //requerimiento de json web token
 const jsonwebtoken = require('jsonwebtoken');
@@ -68,7 +68,7 @@ async function Creacion_De_Admin(req, res) {
 		console.log(token);
 		return token;
 	} else {
-		res.end();
+		res.render('Err');
 	}
 }
 
@@ -83,9 +83,7 @@ async function Nuevo_Producto(req, res) {
 		precio: req.body.Precio,
 	});
 	try {
-
-		await nuevo_producto.save()
-
+		await nuevo_producto.save();
 	} catch (error) {
 		console.log(error);
 		return false;
@@ -94,23 +92,34 @@ async function Nuevo_Producto(req, res) {
 }
 
 //Creacion de Registro
-async function Nuevo_registro (nombre, tipo, marca, descripcion, existencia, precio) {
-	 const nuevo_registro = new registro({
+async function Nuevo_registro(
+	nombre,
+	tipo,
+	marca,
+	descripcion,
+	existencia,
+	precio
+) {
+	const nuevo_registro = new registro({
 		nombre: nombre,
 		tipo: tipo,
 		marca: marca,
 		descripcion: descripcion,
 		existencia: existencia,
-		precio: precio
-	}) 
+		precio: precio,
+	});
 	try {
-		await nuevo_registro.save()
+		await nuevo_registro.save();
 	} catch (error) {
-		return false
+		return false;
 	}
-	return true
+	return true;
 }
 
-
-//Exportacion de modulos
-module.exports = { Creacion_De_Admin, Creacion_De_Usuario, Nuevo_Producto, Nuevo_registro };
+//Exportacion de funciones
+module.exports = {
+	Creacion_De_Admin,
+	Creacion_De_Usuario,
+	Nuevo_Producto,
+	Nuevo_registro,
+};
