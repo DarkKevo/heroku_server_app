@@ -27,12 +27,16 @@ async function editar_datos(req, res) {
 async function restar(req, res) {
 	let objeto = await producto.findOne({ _id: req.params.id }).lean();
 	console.log(objeto.existencia);
-	await producto.updateOne(
-		{ _id: req.params.id },
-		{
-			existencia: objeto.existencia - 1,
-		}
-	);
+	if (objeto.existencia == 0) {
+		return false
+	} else {
+		await producto.updateOne(
+			{ _id: req.params.id },
+			{
+				existencia: objeto.existencia - 1,
+			}
+		);
+	}
 }
 
 //funcion de sumar

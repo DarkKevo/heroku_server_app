@@ -120,25 +120,31 @@ rutas.get('/Agregado/:id', async (req, res) => {
 	if (resp == false) {
 		res.render('Err');
 	} else {
-		restar(req, res).then(() => {
-			objeto(req, res).then(async (resp) => {
-				await Nuevo_registro(
-					resp.nombre,
-					resp.tipo,
-					resp.marca,
-					resp.descripcion,
-					resp.existencia,
-					resp.precio
-				).then(async (respp) => {
-					if (respp == false) {
-						res.render('Err');
-					} else {
-						const Producto = await producto.find().lean();
-						const Registro = await registros.find().lean();
-						res.render('Tienda', { Registro, Producto });
-					}
+		restar(req, res).then( async (resp) => {
+			if (resp == false) {
+				const Producto = await producto.find().lean();
+				const Registro = await registros.find().lean();
+				res.render('Tienda', { Registro, Producto });
+			} else {
+				objeto(req, res).then(async (resp) => {
+					await Nuevo_registro(
+						resp.nombre,
+						resp.tipo,
+						resp.marca,
+						resp.descripcion,
+						resp.existencia,
+						resp.precio
+					).then(async (respp) => {
+						if (respp == false) {
+							res.render('Err');
+						} else {
+							const Producto = await producto.find().lean();
+							const Registro = await registros.find().lean();
+							res.render('Tienda', { Registro, Producto });
+						}
+					});
 				});
-			});
+			}
 		});
 	}
 });
