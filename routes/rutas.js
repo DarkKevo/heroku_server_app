@@ -36,7 +36,7 @@ const {
 } = require('../controllers/busquedas');
 
 //requerimiento de controladores de edicion
-const { editar_datos, restar, sumar } = require('../controllers/edicion');
+const { editar_datos, restar, sumar, total } = require('../controllers/edicion');
 
 //requerimiento de controladores de eliminacion
 const {
@@ -47,7 +47,7 @@ const {
 
 //JSONWebtoken
 let token_actuall;
-let total_a_pagar=0;
+let total_a_pagar = 0;
 
 //Inventario
 //Crear Producto
@@ -117,9 +117,7 @@ rutas.post('/BuscarT', async (req, res) => {
 });
 //Agregar al carrito
 rutas.get('/Agregado/:id', async (req, res) => {
-	//totalAQUISeIncrementa
 	total_a_pagar;
-
 	let resp = await VerifyTokenUser(token_actuall);
 	if (resp == false) {
 		res.render('Err');
@@ -142,6 +140,8 @@ rutas.get('/Agregado/:id', async (req, res) => {
 						if (respp == false) {
 							res.render('Err');
 						} else {
+							let valor_de_total = await total()
+							total_a_pagar = valor_de_total
 							const Producto = await producto.find().lean();
 							const Registro = await registros.find().lean();
 							res.render('Tienda', { Registro, Producto,total_a_pagar });
@@ -165,6 +165,8 @@ rutas.get('/Quitado/:id', async (req, res) => {
 				if (!resp) {
 					res.render('Err');
 				} else {
+					let valor_de_total = await total()
+					total_a_pagar = valor_de_total
 					const Producto = await producto.find().lean();
 					const Registro = await registros.find().lean();
 					res.render('tienda', { Registro, Producto, total_a_pagar });

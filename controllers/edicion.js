@@ -57,5 +57,15 @@ async function sumar(req, res) {
 	);
 }
 
+//funcion de suma de total
+async function total(){
+	let total_final = 0
+	let valor = await registro.find().lean()
+	await valor.forEach(element => {
+		total_final += element.precio
+	}); 
+	return total_final
+}
+
 //exportacion de funciones
-module.exports = { editar_datos, restar, sumar };
+module.exports = { editar_datos, restar, sumar, total };
