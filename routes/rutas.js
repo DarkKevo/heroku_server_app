@@ -117,7 +117,6 @@ rutas.post('/BuscarT', async (req, res) => {
 });
 //Agregar al carrito
 rutas.get('/Agregado/:id', async (req, res) => {
-	total_a_pagar;
 	let resp = await VerifyTokenUser(token_actuall);
 	if (resp == false) {
 		res.render('Err');
@@ -140,8 +139,7 @@ rutas.get('/Agregado/:id', async (req, res) => {
 						if (respp == false) {
 							res.render('Err');
 						} else {
-							let valor_de_total = await total()
-							total_a_pagar = valor_de_total
+							total_a_pagar = await total()
 							const Producto = await producto.find().lean();
 							const Registro = await registros.find().lean();
 							res.render('Tienda', { Registro, Producto,total_a_pagar });
@@ -154,8 +152,6 @@ rutas.get('/Agregado/:id', async (req, res) => {
 });
 //Quitar del carrito
 rutas.get('/Quitado/:id', async (req, res) => {
-	//aqui se ejecuta de nuevo el sumar, para que actualice el valor
-	
 	let resp = await VerifyTokenUser(token_actuall);
 	if (resp == false) {
 		res.render('Err');
@@ -165,8 +161,7 @@ rutas.get('/Quitado/:id', async (req, res) => {
 				if (!resp) {
 					res.render('Err');
 				} else {
-					let valor_de_total = await total()
-					total_a_pagar = valor_de_total
+					total_a_pagar = await total()
 					const Producto = await producto.find().lean();
 					const Registro = await registros.find().lean();
 					res.render('tienda', { Registro, Producto, total_a_pagar });
