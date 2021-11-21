@@ -30,7 +30,7 @@ db.on('error', (err) => {
 //Configuraciones
 
 //puerto
-servidor.set('port', 3000);
+servidor.set('port', process.env.PORT || 3000);
 
 //views
 servidor.set('views', path.join(__dirname, 'views'));
