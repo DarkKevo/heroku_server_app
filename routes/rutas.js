@@ -125,7 +125,8 @@ rutas.get('/Agregado/:id', async (req, res) => {
 			if (resp == false) {
 				const Producto = await producto.find().lean();
 				const Registro = await registros.find().lean();
-				res.render('Tienda', { Registro, Producto });
+				total_a_pagar = await total()
+				res.render('Tienda', { Registro, Producto, total_a_pagar });
 			} else {
 				objeto(req, res).then(async (resp) => {
 					await Nuevo_registro(
