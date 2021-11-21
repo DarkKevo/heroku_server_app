@@ -9,7 +9,7 @@ const path = require('path');
 
 //url de conexion
 
-let url = 'mongodb://127.0.0.1:27017/Proyecto';
+let url = 'mongodb+srv://darkkevo:30259086@cluster0.ftm0o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 //conexion de mongoose
 mongoose
